@@ -3,15 +3,17 @@ using System.Collections.Concurrent;
 
 public class Scripture
 {
+    //Declaring the _memberVariables
     private Reference _reference;
-    private List<Word> _words;
+    private List<Word> _words = new List<Word>();
 
 
-
+    //Defining allowed constructors
     public Scripture(Reference reference, string text)
     {
         _reference = reference;
         string[] wholeThing = text.Split(' ');
+        //This part makes breaks the string up into a list of Word objects
         foreach(var oneWord in wholeThing)
         {
             Word wordObject = new Word(oneWord);
@@ -21,27 +23,21 @@ public class Scripture
 
 
 
-    public void HideRandomWords(int numberToHide)
+    public void HideRandomWords() //This function randomly selects some words from the list and hides them
     {
-        
-        for (int i = 0; i < numberToHide; i++)
+        Random random = new Random();
+        //This is pretty cool! I learned about Lambda functions in C# from my brother, and he helped me set this up
+        //to where it orders the words randomly, and then takes the top two and (will) hide them, but only if they aren't already hidden
+        List<Word> randomWords = _words.Where(x => !x.IsHidden()).OrderBy(x => random.Next()).Take(2).ToList();
+
+        foreach (Word word in randomWords)
         {
-            var random = new Random();
-            int index = random.Next(_words.Count);
-            Word word = _words[index];
-            if (word.IsHidden()== false)
-            {
-                word.Hide();
-            }
-            else
-            {
-                i--;
-            }
+            word.Hide();
         }
     }
 
 
-    public string GetDisplayText()
+    public string GetDisplayText() //this function just makes the string to display the full scripture text
     {
         string completeText = $"{_reference.GetDisplayText()} ";
         foreach(Word word in _words)
@@ -53,7 +49,7 @@ public class Scripture
 
 
 
-    public bool IsCompletelyHidden()
+    public bool IsCompletelyHidden() //This function just checks if the whole scripture is hidden or not.
     {
         foreach(Word word in _words)
         {
