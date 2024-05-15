@@ -1,4 +1,4 @@
-using System
+using System;
 
 public class MathAssignment : Assignment
 {
@@ -13,6 +13,6 @@ public class MathAssignment : Assignment
 
     public string GetHomeworkList()
     {
-        return "Section " + _textbookSection + " #(s)" + problems
+        return "Section " + _textbookSection + " #(s)" + _problems;
     }
 }

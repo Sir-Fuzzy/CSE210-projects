@@ -1,4 +1,4 @@
-using System
+using System;
 
 public class WritingAssignment : Assignment
 {
@@ -12,7 +12,7 @@ public class WritingAssignment : Assignment
 
     public string GetWritingAssignemt()
     {
-        return _title
+        return _title;
     }    
     
 }
