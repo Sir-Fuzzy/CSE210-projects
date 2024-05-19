@@ -24,7 +24,7 @@ public class BreathingActivity : Activity
 
         while (DateTime.Now <= endTime)
         {
-            Console.Write("\n\nBreath in...");
+            Console.Write("\n\nBreathe in...");
             ShowCountdownTimer(5);
             totalTime += 5;
             Console.Write("\nAnd out...");
