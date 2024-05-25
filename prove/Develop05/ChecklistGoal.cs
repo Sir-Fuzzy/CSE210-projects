@@ -17,21 +17,36 @@ public class ChecklistGoal : Goal
 
     public override void RecordEvent()
     {
-        throw new NotImplementedException();
+        _totalPoints += _points;
+        _amountCompleted +=1;
+        if (_amountCompleted ==_target)
+        {
+            _totalPoints += _bonus;
+        }
     }
 
     public override bool IsComplete()
     {
-        throw new NotImplementedException();
+        if (_amountCompleted == _target)
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
     }
 
-    public string GetStringDetails()
-    {
-        return "string";
-    }
 
     public override string GetStringRepresentation()
     {
-        throw new NotImplementedException();
+        if (IsComplete())
+        {
+            return $"[x] {_goalName} -- {_description} ({_amountCompleted}/{_target})";
+        }
+        else 
+        {
+            return $"[ ] {_goalName} -- {_description} ({_amountCompleted}/{_target})";
+        }
     }
 }

@@ -2,13 +2,14 @@ using System;
 
 public abstract class Goal
 {
-    private string _shortName;
-    private string _description;
-    private int _points;
+    protected string _goalName;
+    protected string _description;
+    protected int _points;
+    protected int _totalPoints;
 
     protected Goal(string name, string description, int points)
     {
-        _shortName = name;
+        _goalName = name;
         _description = description;
         _points = points;
     }
@@ -17,7 +18,11 @@ public abstract class Goal
 
     public abstract bool IsComplete();
 
-    // public abstract string GetDetailsString();
+    public int GetTotalPoints()
+    {
+        
+        return _totalPoints;
+    }
 
     public abstract string GetStringRepresentation();
     

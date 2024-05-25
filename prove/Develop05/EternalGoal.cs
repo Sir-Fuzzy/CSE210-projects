@@ -10,16 +10,16 @@ public class EternalGoal : Goal
 
     public override void RecordEvent()
     {
-        throw new NotImplementedException();
+        _totalPoints += _points;
     }
 
     public override bool IsComplete()
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     public override string GetStringRepresentation()
     {
-        throw new NotImplementedException();
+        return $"{_goalName} -- {_description}";
     }
 }
