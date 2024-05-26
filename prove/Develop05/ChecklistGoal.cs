@@ -3,9 +3,9 @@ using System;
 
 public class ChecklistGoal : Goal
 {
-    private int _amountCompleted;
-    private int _target;
-    private int _bonus;
+    public int _amountCompleted {get; set;}
+    public int _target {get; set;}
+    public int _bonus {get; set;}
 
 
     public ChecklistGoal(string name, string description, int points, int target, int bonus) : base(name, description, points)

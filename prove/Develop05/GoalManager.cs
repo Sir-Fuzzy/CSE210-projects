@@ -1,3 +1,5 @@
+
+// Surely one of these will work! I hope...
 using System;
 using System.Runtime.CompilerServices;
 using System.IO;
@@ -5,6 +7,8 @@ using System.Text.Json;
 using System.Data.Common;
 using System.IO.Enumeration;
 using System.Xml.Linq;
+using Newtonsoft;
+using Newtonsoft.Json;
 
 public class GoalManager
 {
@@ -26,7 +30,8 @@ public class GoalManager
         }
         else 
         {
-            File.Create(fileName);
+            File.Create(fileName).Close();
+            
         }
 
 
@@ -39,10 +44,10 @@ public class GoalManager
             Console.WriteLine("Menu:");
             Console.WriteLine("   1. Create New Goal");
             Console.WriteLine("   2. List Goals");
-            Console.WriteLine("   3. Save Goals");
-            Console.WriteLine("   4. Record Event");
-            Console.WriteLine("   5. See Points");
-            Console.WriteLine("   0. Quit");
+            // Console.WriteLine("   3. Save Goals");
+            Console.WriteLine("   3. Record Event");
+            Console.WriteLine("   4. See Points");
+            Console.WriteLine("   0. Save and Quit");
             string menuChoice = Console.ReadLine();
 
             if (menuChoice == "1")
@@ -53,15 +58,15 @@ public class GoalManager
             {
                 ListGoalDetails();
             }
+            // else if (menuChoice == "3")
+            // {
+            //     SaveGoals(fileName);
+            // }
             else if (menuChoice == "3")
-            {
-                SaveGoals(fileName);
-            }
-            else if (menuChoice == "4")
             {
                 RecordEvent();
             }
-            else if (menuChoice == "5")
+            else if (menuChoice == "4")
             {
                 PlayerPointsProgress();
             }
@@ -161,8 +166,9 @@ public class GoalManager
 
     public void SaveGoals(string filename)
     {
-        string jsonString = JsonSerializer.Serialize(_goals);
-        File.WriteAllText(filename, jsonString);
+        string json = JsonConvert.SerializeObject(_goals, Formatting.Indented, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
+        // string jsonString = JsonSerializer.Serialize(_goals);
+        File.WriteAllText(filename, json);
     }
 
     public void LoadGoals(string filename)
@@ -170,8 +176,17 @@ public class GoalManager
 
         string fileContent = File.ReadAllText(filename);
 
-        List<Goal> goals = JsonSerializer.Deserialize<List<Goal>>(fileContent);
-        _goals.AddRange(goals);
+        if (string.IsNullOrEmpty(fileContent))
+        {
+            return;
+        }
+        else 
+        {
+            
+            List<Goal> deserializedGoals = JsonConvert.DeserializeObject<List<Goal>>(fileContent, new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.Auto });
+            // List<Goal> goals = JsonSerializer.Deserialize<List<Goal>>(fileContent);
+            _goals.AddRange(deserializedGoals);
+        }
 
     }
 }

@@ -2,12 +2,17 @@ using System;
 
 public abstract class Goal
 {
-    protected string _goalName;
-    protected string _description;
-    protected int _points;
-    protected int _totalPoints;
+    public string _goalName {get; set;}
+    public string _description {get; set;}
+    public int _points {get; set;}
+    public int _totalPoints {get; set;}
 
-    protected Goal(string name, string description, int points)
+
+    public Goal()
+    {
+
+    }
+    public Goal(string name, string description, int points)
     {
         _goalName = name;
         _description = description;
